@@ -1,0 +1,33 @@
+class Solution {
+
+    Map<Integer,Integer> map=new HashMap<>();
+    Set<Integer> set=new HashSet<>();
+
+
+    public int dfs(int num){
+
+        if(!set.contains(num))return 0;
+        if(map.containsKey(num))return map.get(num);
+
+        map.put(num,1+dfs(num+1));
+        return map.get(num);
+    }
+
+    public int longestConsecutive(int[] nums) {
+        
+           //Set<Integer> set=new HashSet<>();
+           int max=0;
+
+           for(int val : nums)
+           set.add(val);
+
+           for(int val : set)
+           max=Math.max(max,dfs(val));
+
+           //System.out.println(map)
+
+           return max;
+
+
+    }
+}
