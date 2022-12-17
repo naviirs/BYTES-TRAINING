@@ -1,0 +1,74 @@
+class Solution {
+
+    int pairs=0;
+
+    public void merge(int[] nums,int left,int mid,int right){
+
+        int[] l=new int[mid-left+1];
+        int[] r=new int[right-mid];
+
+        for(int i=left,k=0;i<=mid;i++)
+        l[k++]=nums[i];
+        
+        for(int i=mid+1,k=0;i<=right;i++)
+        r[k++]=nums[i];
+
+        int k1=0,k2=0,k=left;
+
+
+        for(int i=0,j=0;i<l.length && j<r.length;i++){
+            
+            while(j<r.length && l[i]>(2*(long)r[j]))
+            {pairs+=l.length-i;j++;}
+        }
+
+        while(k1<l.length && k2<r.length){
+
+           if(l[k1]<r[k2])
+           nums[k++]=l[k1++];
+
+           else
+           nums[k++]=r[k2++];
+
+        } 
+
+        while(k1<l.length)
+        nums[k++]=l[k1++];
+
+        while(k2<r.length)
+        nums[k++]=r[k2++];
+
+    }
+
+    public void divide(int[] nums,int left,int right){
+        
+        if(left>=right)return;
+
+        int mid=left+(right-left)/2;
+
+        divide(nums,left,mid);
+        divide(nums,mid+1,right);
+
+        merge(nums,left,mid,right);
+    }
+
+
+    public int reversePairs(int[] nums) {
+        
+        
+       /* int l=nums.length,pairs=0;
+        for(int i=0;i<l;i++){
+            for(int j=i+1;j<l;j++){
+                if(nums[i]>(2*(long)nums[j]))pairs++;
+            }
+        }
+        
+        return pairs;
+        */
+
+        divide(nums,0,nums.length-1);
+        System.out.println(Arrays.toString(nums));
+        return pairs;
+
+    }
+}
